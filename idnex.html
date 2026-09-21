@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Önemli Bilgilendirme</title>
+    <style>
+        /* Modern İlk Arayüz */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        #normal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+        #normal-content h1 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #normal-content p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* 9. Saniyedeki Bozulma (Glitch) Efekti */
+        .glitch {
+            animation: glitch-anim 0.2s infinite;
+        }
+        @keyframes glitch-anim {
+            0% { transform: translate(0) skew(0deg); filter: invert(0); }
+            20% { transform: translate(-5px, 5px) skew(10deg); filter: invert(1); }
+            40% { transform: translate(5px, -5px) skew(-10deg); filter: invert(0); }
+            60% { transform: translate(-2px, 2px) skew(5deg); filter: invert(1); }
+            80% { transform: translate(2px, -2px) skew(-5deg); filter: invert(0); }
+            100% { transform: translate(0) skew(0deg); filter: invert(1); }
+        }
+
+        /* Hack Ekranı Arayüzü */
+        #hack-screen {
+            display: none;
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            width: 100vw;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .warning-box {
+            border: 2px solid red;
+            background: rgba(255, 0, 0, 0.2);
+            color: red;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: blink 0.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        #terminal {
+            height: calc(100vh - 100px);
+            overflow-y: hidden;
+            font-size: 14px;
+            line-height: 1.3;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #222;
+            margin: 10px 0;
+            border: 1px solid #0f0;
+        }
+        .progress-bar {
+            height: 15px;
+            background-color: red;
+            width: 0%;
+            transition: width 0.1s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- İlk açılıştaki temiz, modern arayüz -->
+    <div id="normal-content">
+        <h1>Günün Mesajı</h1>
+        <p>hah btw yazmayın bide youtube short izileynleri kıskanmayın</p>
+    </div>
+
+    <!-- 10. saniyede belirecek gizli terminal -->
+    <div id="hack-screen">
+        <div class="warning-box">!!! CRITICAL SECURITY BREACH DETECTED !!!</div>
+        <div id="terminal"></div>
+    </div>
+
+    <script>
+        const normalContent = document.getElementById('normal-content');
+        const hackScreen = document.getElementById('hack-screen');
+        const terminal = document.getElementById('terminal');
+
+        // 9. saniyede ekran bozulmaya (glitch) başlasın
+        setTimeout(() => {
+            document.body.classList.add('glitch');
+        }, 9000);
+
+        // 10. saniyede tamamen hack moduna geçiş yap
+        setTimeout(() => {
+            document.body.classList.remove('glitch');
+            normalContent.style.display = 'none';
+            hackScreen.style.display = 'block';
+            document.body.style.background = '#000';
+
+            // Tarayıcı izin verirse tam ekrana (F11 modu) geçmeye zorla
+            try {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            } catch(e) {}
+
+            startHackingSequence();
+        }, 10000);
+
+        function startHackingSequence() {
+            const lines = [
+                "INITIALIZING ROOTKIT THREADS...",
+                "BYPASSING LOCAL FIREWALL... [SUCCESS]",
+                "ACCESSING CAMERA FEED...",
+                "CAMERA FEED ACQUIRED.",
+                "EXTRACTING SAVED PASSWORDS FROM BROWSER...",
+                "DOWNLOADING BROWSER HISTORY AND MESSAGES...",
+                "[====================] 100% COMPLETE",
+                "UPLOADING DEVICE DATA TO REMOTE SERVER (IP: 192.168.21.99)..."
+            ];
+
+            let index = 0;
+
+            // Terminale yavaş yavaş, sanki biri komut giriyormuş gibi mesajları yazdır
+            const slowTyping = setInterval(() => {
+                if (index < lines.length) {
+                    const p = document.createElement('div');
+                    p.innerText = "root@system:~# " + lines[index];
+                    terminal.appendChild(p);
+                    
+                    // Veri yükleniyor mesajında sahte kırmızı bar çıkart
+                    if (lines[index].includes("UPLOADING")) {
+                        createProgressBar();
+                    }
+                    index++;
+                } else {
+                    clearInterval(slowTyping);
+                    // Yavaş mesajlar bitince hızlı kod akışını başlat
+                    setTimeout(startFastMatrixCode, 1500);
+                }
+            }, 700);
+        }
+
+        function createProgressBar() {
+            const container = document.createElement('div');
+            container.className = 'progress-bar-container';
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar';
+            container.appendChild(bar);
+            terminal.appendChild(container);
+
+            let width = 0;
+            const progress = setInterval(() => {
+                width += Math.random() * 8;
+                if (width >= 100) {
+                    width = 100;
+                    clearInterval(progress);
+                }
+                bar.style.width = width + '%';
+            }, 100);
+        }
+
+        function startFastMatrixCode() {
+            // Ekrana sürekli rastgele kodlar ve kırmızı/yeşil hex değerleri basar
+            setInterval(() => {
+                const chars = "0123456789ABCDEF!@#$%^&*";
+                let randomHex = "";
+                for(let i=0; i<64; i++) {
+                    randomHex += chars[Math.floor(Math.random() * chars.length)];
+                }
+                
+                const p = document.createElement('div');
+                // Arada rastgele kırmızı uyarılar (hata veriyormuş gibi) çıkar
+                p.style.color = (Math.random() > 0.85) ? "red" : "#0f0"; 
+                p.innerText = "0x" + Math.floor(Math.random()*999999) + " DATA_DUMP: " + randomHex;
+                terminal.appendChild(p);
+
+                // Tarayıcı kasmaması için eski satırları sil ve hep en alta kaydır
+                if (terminal.childNodes.length > 40) {
+                    terminal.removeChild(terminal.firstChild);
+                }
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 35); // Milisaniye ayarı (35 = Çok hızlı)
+        }
+    </script>
+</body>
+</html>
